@@ -3,6 +3,7 @@
 class SiteController extends Controller
 {
     const DEFAULT_USER_ROLE = 'user';
+    const COMMENT_STATUS_ACTIVE = 1;
 	/**
 	 * Declares class-based actions.
 	 */
@@ -123,16 +124,15 @@ class SiteController extends Controller
                 return;
             }else
             {
-                if(isset($_POST['LoginForm']))
-                {
-                    $model->attributes=$_POST['LoginForm'];
+
+                    $model->username = $username;
+                    $model->password = $password;
                     // validate user input and redirect to the previous page if valid
                     if($model->validate() && $model->login()) {
                         echo 'OK';
                     }else{
                         echo 'Your login or password is incorrect';
                     }
-                }
                 return;
             }
         }
@@ -210,5 +210,35 @@ class SiteController extends Controller
             return $this->render('post', ['model' => $model, 'imgModel' => $imgModel, 'allImgs' => $allImgs]);
         }
         return new \Exception('Post with such id does not exists');
+    }
+
+    public function actionAddcomment($comment = '', $userId = 0, $postId = 0)
+    {
+        if($userId!=0&&$postId!=0)
+        {
+            if(Yii::app()->request->isAjaxRequest)
+            {
+                $model = new Comment();
+
+                $model->content = $comment;
+                $model->user_id = $userId;
+                $model->post_id = $postId;
+                $model->date_created = date('Y-m-d');
+                $model->status = self::COMMENT_STATUS_ACTIVE;
+                
+                if($model->save())
+                {
+                    $user = User::model()->findByPk($model->user_id);
+
+                    $jsonEnc = ['id' => $model->user_id, 'content' => $model->content, 'date_created' => $model->date_created, 'username' => $user->username ];
+                    echo json_encode($jsonEnc);
+                    return;
+                }else{
+                    echo 'error';
+                }
+            }
+        }
+        echo 'user id or post id equals zero';
+        return;
     }
 }

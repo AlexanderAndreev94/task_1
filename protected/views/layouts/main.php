@@ -2,6 +2,7 @@
 $cs = Yii::app()->clientScript;
 $cs->registerScriptFile('/test/js/reload/reloadPage.js');
 $cs->registerScriptFile('/test/js/login/login.js');
+$cs->registerScriptFile('/test/js/comment/comment.js');
 ?>
 <!DOCTYPE html>
 <html>

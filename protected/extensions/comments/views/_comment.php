@@ -7,7 +7,7 @@
 <div class="view">
 
     <b id="uid" uid=<?='"'.$data->user_id.'"' ?> ><?php echo CHtml::encode($data->getAttributeLabel('username')); ?>:</b>
-    <?php echo CHtml::link(CHtml::encode($usr->username), array('view', 'id'=>$data->id)); ?>
+    <?php echo CHtml::link(CHtml::encode($usr->username), array('view', 'id'=>$data->id), ['pid'=>$data->id, 'id' => 'postId']); ?>
     <br />
 
     <b><?php echo CHtml::encode($data->getAttributeLabel('content')); ?>:</b>

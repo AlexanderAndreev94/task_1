@@ -9,6 +9,7 @@
 /* @var $model Comment */
 /* @var $widget CWidget*/
 /* @var $dataProvider */
+
 ?>
 
 <div class="commentContainer" style="width: 100%">
@@ -35,7 +36,7 @@
 </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton('Comment', ['id' => 'submitComment']); ?>
+        <?php echo CHtml::submitButton('Comment', ['id' => 'addComment']); ?>
 </div>
 
 <?php $widget->endWidget(); ?>
